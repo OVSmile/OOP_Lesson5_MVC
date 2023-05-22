@@ -26,4 +26,13 @@ public class UserController {
 
         throw new Exception("User not found");
     }
+
+
+    public List<User> getList(){
+        return repository.getAllUsers();
+    }
+
+    public void updateUser(User inputtedUser) {
+        repository.updateUser(inputtedUser);
+    }
 }
