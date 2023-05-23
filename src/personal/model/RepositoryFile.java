@@ -53,6 +53,18 @@ public class RepositoryFile implements Repository {
         saveAllUsers(users);
     }
 
+    @Override
+    public void deleteUser(User deletedUser) {
+        List<User> users = this.getAllUsers();
+        List<String> lines = new ArrayList<>();
+        for (User item : users) {
+            if (deletedUser.getId().equals(item.getId())){
+                continue;
+            }else lines.add(mapper.map(item));
+        }
+        fileOperation.saveAllLines(lines);
+    }
+
     private void saveAllUsers(List<User> users){
         List<String> lines = new ArrayList<>();
         for (User item: users) {

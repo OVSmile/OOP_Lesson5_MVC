@@ -37,6 +37,8 @@ public class ViewUser {
                     case UPDATE:
                         updateUserData();
                         break;
+                    case DELETE:
+                        deleteUserData();
 
                 }
             } catch (Exception e) {
@@ -45,9 +47,21 @@ public class ViewUser {
         }
     }
 
+    private void deleteUserData() {
+        printListUsers();
+        String id = prompt("Идентификатор пользователя для удаления: ");
+        try {
+            User deleteUser = userController.readUser(id);
+            userController.deleteUser(deleteUser);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private User inputUser(){
         String firstName;
         String lastName;
+        String phone;
         do {
             firstName = prompt("Имя: ");
         } while (validateData.checkFirstName(firstName));
@@ -56,7 +70,10 @@ public class ViewUser {
             lastName = prompt("Фамилия: ");
         } while (validateData.checkLastName(lastName));
 
-        String phone = prompt("Номер телефона: ");
+        do {
+            phone = prompt("Номер телефона: ");
+        } while (validateData.checkPhone(phone));
+
         return new User(firstName, lastName, phone);
     }
 
